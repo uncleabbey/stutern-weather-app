@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Stutern Weather App</title>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh2kZTGUWRxGeVLkkxU-Toi8scnrMzUfw&libraries=places"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="https://res.cloudinary.com/kayode/image/upload/v1603097185/TransAll/full_moon_tdxso8.svg" alt="Logo">
+      <h4 class="title">Weather App</h4>
+    </div>
+    <span class="day"></span>
+    <form id="searchForm">
+      <input 
+        id="searchTextField" 
+        name="searchTextField"
+        type="text" 
+        placeholder="Enter a location" 
+        autocomplete="on" 
+        runat="server"
+        class="form-control"
+      />
+      <input type="hidden" id="city2" name="city2" />
+      <input type="hidden" id="cityLat" name="cityLat" />
+      <input type="hidden" id="cityLng" name="cityLng" />
+    </form>
+  </header>
+  <main>
+    <section class="display-weather">
+      <div>
+        <h2 class="temp"></h2>
+      <div class="temp-container">
+        <span class="temp-desc"></span>
+      </div>
+      <div class="row">
+      <p class="wind-info humidity">
+        <span>Humidity</span>
+        <span id="humidity"></span>  
+      </p>
+      <p class="wind-info wind">
+        <span>Wind</span>
+        <span id="wind"></span>
+      </p>
+    </div>
+      <div class="row">
+        <p class="wind-info humidity">
+          <span>Sunrise</span>
+          <span id="sunrise"></span>
+        </p>
+        <p class="wind-info wind">
+          <span>Sunset</span>
+          <span id="sunset"></span>
+        </p>
+      </div>
+      </div>
+      
+      <div class="name">
+        <h4 class="name-head"></h4>
+      </div>
+    </section>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+</html>
