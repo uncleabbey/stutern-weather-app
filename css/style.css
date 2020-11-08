@@ -71,6 +71,7 @@ body {
   padding-bottom: 10px;
   border-bottom: 3px solid #fff;
   font-weight: bolder;
+  margin-bottom: 2em;
 }
 .wind-info {
   display: flex;
@@ -89,6 +90,10 @@ body {
 .row {
   display: flex;
 }
+
+
+
+
 @media only screen and (max-width: 600px) {
 main {
   padding: 0;
