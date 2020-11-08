@@ -1,9 +1,12 @@
+
+// display day
 const getDay = new Date();
 
 const displayDay = document.querySelector(".day");
 
 displayDay.innerHTML = getDay.toDateString()
 
+// fetch Data from api
 const fetchData = (data) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.long}&appid=99982a0396e111de66445b3aa84ce3d8&units=metric`;
   fetch(url)
@@ -12,9 +15,12 @@ const fetchData = (data) => {
     console.log(data);
     useData(data)
   })
-  .catch(error => console.log(error))
+  .catch(error => {
+    console.log(error)
+  })
 }
 
+// Initialize auto complete
 function initialize() {
   const input = document.getElementById('searchTextField');
   const autocomplete = new google.maps.places.Autocomplete(input);
@@ -27,6 +33,7 @@ function initialize() {
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 
+// Action on Submit
 document.querySelector("#searchForm").addEventListener("submit", (e) => {
   e.preventDefault()
   const data = {
@@ -36,20 +43,9 @@ document.querySelector("#searchForm").addEventListener("submit", (e) => {
   }
   fetchData(data)
 })
-const getImage = (weather) => {
-  switch (weather) {
-    case "Rain":
-      return "https://tenor.com/UkIH.gif"
-    case "Clouds":
-      return "https://tenor.com/bl22E.gif"
-    case "Snow":
-      return "https://tenor.com/V7LY.gif"
-    case "Sun":
-      return "https://tenor.com/5iq0.gif"
-    default:
-      return null;
-  }
-}
+
+
+// Display data to the UI
 const useData = (data) => {
   const temp = document.querySelector(".temp")
   const tempDesc = document.querySelector(".temp-desc")
@@ -69,6 +65,8 @@ const useData = (data) => {
   sunriseInfo.innerHTML = getTime(sys.sunrise)
   sunsetInfo.innerHTML = getTime(sys.sunset)
 }
+
+// Get Position from browser
 const showPosition = (position) => {
   const data = {
     long: position.coords.longitude,
@@ -78,6 +76,8 @@ const showPosition = (position) => {
   fetchData(data)
 }
 
+
+// get location from browser
 function getLocation() {
   if (navigator.geolocation) {
     return navigator.geolocation.getCurrentPosition(showPosition);
@@ -85,8 +85,12 @@ function getLocation() {
     console.log("Geolocation is not supported by this browser.");
   }
 }
+
+// Action on load 
 window.addEventListener("load", () => getLocation())
 
+
+// helper function to convert unix time
 const getTime = (unix) => {
   const unixMod = unix * 1000;
   const date = new Date(unixMod)
