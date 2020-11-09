@@ -8,15 +8,22 @@ displayDay.innerHTML = getDay.toDateString()
 
 // fetch Data from api
 const fetchData = (data) => {
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.long}&appid=99982a0396e111de66445b3aa84ce3d8&units=metric`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${data.city}&appid=99982a0396e111de66445b3aa84ce3d8&units=metric`;
   fetch(url)
   .then(res => res.json())
   .then(data => {
     console.log(data);
+    if(data.cod === "400") {
+      displayAlert("danger", "Bad Request")
+    } else if(data.cod === "404") {
+      displayAlert("danger", "Sorry City Not Found");
+    } else {
     useData(data)
+    }
   })
   .catch(error => {
-    console.log(error)
+    console.log(error.message);
+    displayAlert("danger", error.message);
   })
 }
 
@@ -26,22 +33,34 @@ function initialize() {
   const autocomplete = new google.maps.places.Autocomplete(input);
   google.maps.event.addListener(autocomplete, 'place_changed', function () {
     const place = autocomplete.getPlace();
-      document.getElementById('city2').value = place.name;
-      document.getElementById('cityLng').value = place.geometry.location.lng();
-      document.getElementById('cityLat').value = place.geometry.location.lat();
+      document.getElementById('city2').value = place.name || "";
     });
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 
+const displayAlert = (type, message) => { 
+      const showError = document.getElementById("show-error");
+        const h5 = document.createElement("h5");
+        h5.className = `text-center alert alert-dismissables alert-${type}`;
+        h5.textContent = message;
+        showError.appendChild(h5);
+        setTimeout(() => document.querySelector(".alert").remove(), 3000);
+  }
+
 // Action on Submit
 document.querySelector("#searchForm").addEventListener("submit", (e) => {
   e.preventDefault()
+const searchTextField = document.getElementById("searchTextField").value;
+if(searchTextField === "") {
+  displayAlert("danger", "Sorry..the field are required!!!!");
+}
   const data = {
-    city: document.getElementById('city2').value,
-    long: document.getElementById('cityLng').value,
-    lat: document.getElementById('cityLat').value
+    city: document.getElementById('city2').value || document.getElementById("searchTextField").value,
   }
-  fetchData(data)
+  fetchData(data);
+
+  // clear field
+  document.getElementById("searchTextField").value = "";
 })
 
 
@@ -54,6 +73,7 @@ const useData = (data) => {
   const humidityInfo = document.querySelector("#humidity")
   const sunriseInfo = document.querySelector("#sunrise")
   const sunsetInfo = document.querySelector("#sunset")
+  const icon = document.querySelector("#weather-icon")
 
   const {main, cloud, name, weather, sys, wind } = data;
 
@@ -64,13 +84,13 @@ const useData = (data) => {
   humidityInfo.innerHTML = `${main.humidity} %`
   sunriseInfo.innerHTML = getTime(sys.sunrise)
   sunsetInfo.innerHTML = getTime(sys.sunset)
+  icon.src = `http://openweathermap.org/img/w/${weather[0].icon}.png`
 }
 
 // show lagos if position is not available
 const showLagos = () => {
   const data = {
-    long: 3.3792,
-    lat: 6.5244
+    city: "lagos"
   }
   fetchData(data)
 }
