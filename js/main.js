@@ -66,28 +66,19 @@ const useData = (data) => {
   sunsetInfo.innerHTML = getTime(sys.sunset)
 }
 
-// Get Position from browser
-const showPosition = (position) => {
+// show lagos if position is not available
+const showLagos = () => {
   const data = {
-    long: position.coords.longitude,
-    lat: position.coords.latitude
+    long: 3.3792,
+    lat: 6.5244
   }
-  console.log(data)
   fetchData(data)
 }
 
 
-// get location from browser
-function getLocation() {
-  if (navigator.geolocation) {
-    return navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    console.log("Geolocation is not supported by this browser.");
-  }
-}
 
 // Action on load 
-window.addEventListener("load", () => getLocation())
+window.addEventListener("load", () => showLagos())
 
 
 // helper function to convert unix time
