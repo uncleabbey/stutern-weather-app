@@ -53,6 +53,7 @@ document.querySelector("#searchForm").addEventListener("submit", (e) => {
 const searchTextField = document.getElementById("searchTextField").value;
 if(searchTextField === "") {
   displayAlert("danger", "Sorry..the field are required!!!!");
+  return;
 }
   const data = {
     city: document.getElementById('city2').value || document.getElementById("searchTextField").value,
