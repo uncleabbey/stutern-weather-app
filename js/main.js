@@ -110,6 +110,6 @@ const getTime = (unix) => {
   const minutes = date.getMinutes();
   const formatMinute = minutes <= 9 ? `0${minutes}` : minutes
 
-  return `${hours}:${formatMinute} ${hours > 12 ? "PM": "AM"}`
+  return `${hours}:${formatMinute} ${hours >= 12 ? "PM": "AM"}`
 }
 
