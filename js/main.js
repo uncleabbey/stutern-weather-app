@@ -108,7 +108,8 @@ const getTime = (unix) => {
   const date = new Date(unixMod)
   const hours = date.getHours();
   const minutes = date.getMinutes();
+  const formatMinute = minutes <= 9 ? `0${minutes}` : minutes
 
-  return `${hours}:${minutes} ${hours > 12 ? "PM": "AM"}`
+  return `${hours}:${formatMinute} ${hours > 12 ? "PM": "AM"}`
 }
 
